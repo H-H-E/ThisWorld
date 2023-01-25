@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>here, does not exist</title>
+    <meta name="description" content="here, does not exist" />
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-entity text="value: Press the Spacebar"></a-entity>
+        <a-entity geometry="plane" position="0 4 0"
+            text="anchor: right; width: 1.5; color: black; value: [RIGHT ANCHOR] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam"></a-entity>
+        <a-sky src="img/img_0.png"></a-sky>
+        <script>
+            var images = [];
+            var currentImage = 0;
+            // create an array of image URLs
+            for (var i = 0; i < 25; i++) {
+                images.push("img/img_" + i + ".png");
+            }
+            document.querySelector("a-sky").setAttribute("src", images[currentImage]);
+            document.addEventListener("keydown", function (event) {
+                if (event.keyCode === 32) {
+                    currentImage++;
+                    if (currentImage >= images.length) {
+                        currentImage = 0;
+                    }
+                    var sky = document.querySelector("a-sky");
+                    sky.setAttribute("src", images[currentImage]);
+                }
+            });
+        </script>
+    </a-scene>
+</body>
+
+</html>
