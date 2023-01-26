@@ -9,16 +9,9 @@
 
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 </head>
-<style>
-    /* Make the loading screen black */
-    .a-loader {
-        background-color: black;
-    }
-</style>
-
 
 <body>
-    <a-scene style="background-color: black;">
+    <a-scene>
         <a-assets>
             <img src="/img/img_0.png" id="img_0">
             <img src="/img/img_1.png" id="img_1">
@@ -34,9 +27,18 @@
 
 
         </a-assets>
+        <!--Controls-->
+        <a-entity hand-controls="left"></a-entity>
+        <a-entity hand-controls="right"></a-entity>
+        <a-entity oculus-touch-controls="hand: left"></a-entity>
+        <a-entity oculus-touch-controls="hand: right"></a-entity>
+        <a-camera><a-cursor></a-cursor></a-camera>
+        <a-box color="#EF2D5E" position="0 -0.84126 0.05862" switchworld="" material="" geometry=""></a-box>
+
+
         <a-sky src="img/img_0.png"></a-sky>
         <a-entity position="0 -1 -5" button="width: 1.5; height: 0.5; on: click; src: #button"
-                events="event: click; function: changeImage"></a-entity>
+            events="event: click; function: changeImage"></a-entity>
 
         <script>
             var images = [];
@@ -57,13 +59,28 @@
                 }
             });
 
-            document.addEventListener("touchstart", function (event) {
-                currentImage++;
-                if (currentImage >= images.length) {
-                    currentImage = 0;
+            /* document.addEventListener("touchstart", function (event) {
+                 currentImage++;
+                 if (currentImage >= images.length) {
+                     currentImage = 0;
+                 }
+                 var sky = document.querySelector("a-sky");
+                 sky.setAttribute("src", images[currentImage]);
+             });
+ */
+            AFRAME.registerComponent('switchworld', {
+                init: function () {
+                    var el = this.el;  // <a-box>
+
+                    el.addEventListener('click', function () {
+                        currentImage++;
+                        if (currentImage >= images.length) {
+                            currentImage = 0;
+                        }
+                        var sky = document.querySelector("a-sky");
+                        sky.setAttribute("src", images[currentImage]);
+                    });
                 }
-                var sky = document.querySelector("a-sky");
-                sky.setAttribute("src", images[currentImage]);
             });
 
         </script>
