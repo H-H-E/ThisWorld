@@ -4,21 +4,46 @@
 <head>
     <title>here, does not exist</title>
     <meta name="description" content="here, does not exist" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 </head>
+<style>
+    /* Make the loading screen black */
+    .a-loader {
+        background-color: black;
+    }
+</style>
+
 
 <body>
-    <a-scene>
-        <a-entity text="value: Press the Spacebar"></a-entity>
-        <a-entity geometry="plane" position="0 4 0"
-            text="anchor: right; width: 1.5; color: black; value: [RIGHT ANCHOR] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam"></a-entity>
+    <a-scene style="background-color: black;">
+        <a-assets>
+            <img src="/img/img_0.png" id="img_0">
+            <img src="/img/img_1.png" id="img_1">
+            <img src="/img/img_2.png" id="img_2">
+            <img src="/img/img_3.png" id="img_3">
+            <img src="/img/img_4.png" id="img_4">
+            <img src="/img/img_5.png" id="img_5">
+            <img src="/img/img_6.png" id="img_6">
+            <img src="/img/img_7.png" id="img_7">
+            <img src="/img/img_8.png" id="img_8">
+            <img src="/img/img_9.png" id="img_9">
+            <img src="/img/img_10.png" id="img_10">
+
+
+        </a-assets>
         <a-sky src="img/img_0.png"></a-sky>
+        <a-entity position="0 -1 -5" button="width: 1.5; height: 0.5; on: click; src: #button"
+                events="event: click; function: changeImage"></a-entity>
+
         <script>
             var images = [];
             var currentImage = 0;
             // create an array of image URLs
-            for (var i = 0; i < 25; i++) {
-                images.push("img/img_" + i + ".png");
+            for (var i = 0; i < 11; i++) {
+                images.push("#img_" + i);
             }
             document.querySelector("a-sky").setAttribute("src", images[currentImage]);
             document.addEventListener("keydown", function (event) {
@@ -31,8 +56,19 @@
                     sky.setAttribute("src", images[currentImage]);
                 }
             });
+
+            document.addEventListener("touchstart", function (event) {
+                currentImage++;
+                if (currentImage >= images.length) {
+                    currentImage = 0;
+                }
+                var sky = document.querySelector("a-sky");
+                sky.setAttribute("src", images[currentImage]);
+            });
+
         </script>
     </a-scene>
+
 </body>
 
 </html>
